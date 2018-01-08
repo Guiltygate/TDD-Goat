@@ -15,7 +15,6 @@ class NewVisitorTest( unittest.TestCase):
 
         #assert 'To-Do' in browser.title ,'Browser title was ' + broswer.title
         self.assertIn( 'To-Do' ,self.browser.title)
-        self.fail( 'Finish the test!')
 
         # User is invited to enter items
 
