@@ -1,10 +1,9 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
-
-hpHTML = '''<html><title>To-Do Lists</title></html>'''
 
 def home_page( request):
-    return HttpResponse( hpHTML)
+    return render( request ,'home.html')
