@@ -33,7 +33,7 @@ class NewVisitorTest( unittest.TestCase):
         # User is invited to enter items
         inputbox = self.browser.find_element_by_id( 'id_new_item')
         self.assertEqual(
-                inputbox.get_attributes( 'placeholder')
+                inputbox.get_attribute( 'placeholder')
                 ,'Enter a to-do item'
         )
 
@@ -50,6 +50,7 @@ class NewVisitorTest( unittest.TestCase):
         rows = table.find_elements_by_tag_name( 'tr')
         self.assertTrue( 
             any( row.text == '1: Buy feathers' for row in rows)
+            ,'New to-do item did not appear in table'
         )
 
 
