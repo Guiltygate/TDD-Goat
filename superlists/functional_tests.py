@@ -8,6 +8,8 @@ from selenium.webdriver.common.keys import Keys
 import time
 import unittest
 
+
+
 class NewVisitorTest( unittest.TestCase):
     browser = None
 
@@ -18,6 +20,12 @@ class NewVisitorTest( unittest.TestCase):
 
     def tearDown( self):
         self.browser.quit()
+
+
+    def check_for_row_in_table( self ,rowtext ,table_id):
+        table = self.browser.find_element_by_id( table_id)
+        rows = table.find_elements_by_tag_name( 'tr')
+        self.assertIn( rowtext ,[row.text for row in rows])
 
 
 
@@ -37,26 +45,20 @@ class NewVisitorTest( unittest.TestCase):
                 ,'Enter a to-do item'
         )
 
+        items = [ 'Buy feathers' ,'Dye feathers']
 
-        # User types in item (buy feathers)
-        inputbox.send_keys( 'Buy feathers')
+        #User enters items and hits enter, one-by-one
+        for i,item in enumerate( items):
+            inputbox = self.browser.find_element_by_id( 'id_new_item')
+            inputbox.send_keys( item)
+            inputbox.send_keys( Keys.ENTER)
+            time.sleep(1)
+            for j in range(1,i+2):
+                self.check_for_row_in_table( '%d: %s' % ( j ,item) ,'id_list_table')
 
-
-        # User hits enter, the page updates, and the pages now lists the item
-        inputbox.send_keys( Keys.ENTER)
-        time.sleep(1)
-
-        table = self.browser.find_element_by_id( 'id_list_table')
-        rows = table.find_elements_by_tag_name( 'tr')
-        self.assertIn( '1: Buy peacock feathers', [row.text for row in rows])
-
-
-        # User still has text box for item entry. User enters item ( dye feathers)
-        self.fail( 'Finish the test!')
-
-        # Page updates again, showing both items
 
         # User checks if list persists, she is given a permanent URL for her list
+        self.fail( 'Finish the test!')
 
         # User visit unique URL
 
