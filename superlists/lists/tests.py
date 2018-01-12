@@ -28,18 +28,13 @@ class ItemModelTest( TestCase):
     def test_saving_and_retrieving_items( self):
         itemTexts = [ 'The first list item' ,'Item the second']
 
-        first_item = ListItem()
-        first_item.text = itemTexts[0]
-        first_item.save()
+        for it in itemTexts:
+            item = ListItem()
+            item.text = it
+            item.save()
 
-        second_item = ListItem()
-        second_item.text = itemTexts[1]
-        second_item.save()
+        savedItems = ListItem.objects.all()
+        self.assertEqual( savedItems.count() ,2)
 
-        saved_items = ListItem.objects.all()
-        self.assertEqual( saved_items.count() ,2)
-
-        first_saved_item = saved_items[0]
-        second_saved_item = saved_items[1]
-        self.assertEqual( first_saved_item.text ,itemTexts[0])
-        self.assertEqual( second_saved_item.text ,itemTexts[1])
+        for count,it in enumerate(itemTexts):
+            self.assertEqual( savedItems[count].text ,it)
