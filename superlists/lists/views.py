@@ -5,6 +5,7 @@ from django.shortcuts import render ,redirect
 
 from lists.models import ListItem
 
+# Testing commit
 def home_page( request):
     if request.method == 'POST':
         ListItem.objects.create( text=request.POST['item_text'] )
