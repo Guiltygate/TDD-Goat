@@ -16,10 +16,31 @@ class HomePageTest( TestCase):
     def test_can_save_POST_request( self):
         response = self.client.post( '/' ,data={'item_text': 'A new list item'})
 
-        
+        self.assertEqual( ListItem.objects.count() ,1)
+        newItem = ListItem.objects.first()
+        self.assertEqual( newItem.text ,'A new list item')
 
-        self.assertIn( 'A new list item', response.content.decode())
-        self.assertTemplateUsed( response ,'home.html')
+    
+    def test_redirects_after_POST( self):
+       response = self.client.post('/' ,data={'item_text':'A new list item'})
+       self.assertEqual( response.status_code ,302)
+       self.assertEqual( response['location'] ,'/')
+
+
+    def test_only_saved_items_when_needed( self):
+        self.client.get('/')
+        self.assertEqual( ListItem.objects.count() ,0)
+
+
+    def test_displays_all_list_items( self):
+        itemTexts = [ 'itemey 1' ,'itemey 2']
+        for it in itemTexts:
+            ListItem.objects.create( text=it)
+
+        response = self.client.get( '/')
+        
+        for it in itemTexts:
+            self.assertIn( it ,response.content.decode())
 
 
 

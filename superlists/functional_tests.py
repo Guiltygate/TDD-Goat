@@ -53,8 +53,7 @@ class NewVisitorTest( unittest.TestCase):
             inputbox.send_keys( item)
             inputbox.send_keys( Keys.ENTER)
             time.sleep(1)
-            for j in range(1,i+2):
-                self.check_for_row_in_table( '%d: %s' % ( j ,item) ,'id_list_table')
+            self.check_for_row_in_table( '%d: %s' % ( i+1 ,item) ,'id_list_table')
 
 
         # User checks if list persists, she is given a permanent URL for her list
