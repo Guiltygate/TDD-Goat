@@ -6,11 +6,12 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
-import unittest
+
+from django.test import LiveServerTestCase
 
 
 
-class NewVisitorTest( unittest.TestCase):
+class NewVisitorTest( LiveServerTestCase):
     browser = None
 
     def setUp( self):
@@ -30,7 +31,7 @@ class NewVisitorTest( unittest.TestCase):
 
 
     def test_start_list_and_retrieve( self):
-        self.browser.get( 'http://localhost:8000')
+        self.browser.get( self.live_server_url)
 
         #User notices title and header are To-Do
         self.assertIn( 'To-Do' ,self.browser.title)
@@ -61,7 +62,3 @@ class NewVisitorTest( unittest.TestCase):
 
         # User visit unique URL
 
-
-
-if __name__ == '__main__':
-    unittest.main( warnings='ignore')
